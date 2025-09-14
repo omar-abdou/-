@@ -82,10 +82,10 @@ const App: React.FC = () => {
 
     try {
       const lastYear = Math.max(...countryData.map(d => d.year));
-      // Provide recent data as context for a better prediction
-      const recentData = countryData.slice(-10).map(({ year, pop }) => ({ year, pop }));
+      // Provide recent data as context for a better prediction, including more factors.
+      const recentData = countryData.slice(-15).map(({ year, pop, lifeExp, gdpPercap }) => ({ year, pop, lifeExp, gdpPercap }));
 
-      const prompt = `Based on the following historical population data for ${selectedCountry} (recent entries: ${JSON.stringify(recentData)}), predict the population for the years from ${lastYear + 1} to 2025. Only provide the predicted data.`;
+      const prompt = `Based on the following historical data for ${selectedCountry} (recent entries include year, population, life expectancy, and GDP per capita: ${JSON.stringify(recentData)}), predict the population for the years from ${lastYear + 1} to 2025. Consider the trends in all provided metrics for a more nuanced prediction. Only provide the predicted data.`;
 
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
@@ -116,8 +116,8 @@ const App: React.FC = () => {
         continent: countryData[0]?.continent || '',
         year: p.year,
         pop: p.pop,
-        lifeExp: 0,
-        gdpPercap: 0,
+        lifeExp: 0, // Not predicting these values
+        gdpPercap: 0, // Not predicting these values
         iso_alpha: countryData[0]?.iso_alpha || '',
         iso_num: countryData[0]?.iso_num || 0,
         predicted: true,
