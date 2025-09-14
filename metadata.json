@@ -1,0 +1,5 @@
+{
+  "name": "دليل سكان العالم",
+  "description": "An interactive web application that visualizes population growth over time for different countries using a dynamic line chart. Users can select a country from a dropdown to update the chart.",
+  "requestFramePermissions": []
+}
